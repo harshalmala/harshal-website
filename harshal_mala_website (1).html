@@ -1,0 +1,1336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Harshal Mala — Customer Experience Specialist</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=UberMove:wght@400;500;700&family=UberMoveText:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Neue+Haas+Grotesk+Display+Pro:wght@400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;700;900&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+<style>
+/* ─────────────────────────────────────────
+   UBER DESIGN LANGUAGE
+   Pure black / pure white / green accent
+   Ultra-bold grotesque · Maximum whitespace
+   Geometric precision · No gradients
+───────────────────────────────────────── */
+:root {
+  --black:   #000000;
+  --white:   #ffffff;
+  --off-white: #f6f6f6;
+  --light-gray: #eeeeee;
+  --mid-gray: #767676;
+  --dark-gray: #1a1a1a;
+  --green:   #06c167;   /* Uber Eats green / brand green */
+  --green-dark: #049850;
+  --border:  #e2e2e2;
+  --border-dark: #2a2a2a;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; font-size: 16px; }
+
+body {
+  background: var(--white);
+  color: var(--black);
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 300;
+  overflow-x: hidden;
+  cursor: none;
+}
+
+/* ── CURSOR ── */
+.cursor {
+  position: fixed; width: 8px; height: 8px;
+  background: var(--black); border-radius: 50%;
+  pointer-events: none; z-index: 9999;
+  transform: translate(-50%,-50%);
+}
+.cursor-ring {
+  position: fixed; width: 32px; height: 32px;
+  border: 1.5px solid var(--black); border-radius: 50%;
+  pointer-events: none; z-index: 9998;
+  transform: translate(-50%,-50%);
+  transition: all 0.15s ease;
+}
+body:has(a:hover) .cursor-ring,
+body:has(button:hover) .cursor-ring {
+  width: 50px; height: 50px;
+  background: rgba(6,193,103,0.1);
+  border-color: var(--green);
+}
+body:has(a:hover) .cursor { background: var(--green); }
+
+/* ── NAV ── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 500;
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 0 5%;
+  height: 72px;
+  background: var(--white);
+  border-bottom: 1px solid var(--border);
+  transition: box-shadow 0.3s;
+}
+nav.scrolled { box-shadow: 0 2px 20px rgba(0,0,0,0.08); }
+
+.nav-logo {
+  font-family: 'Unbounded', sans-serif;
+  font-weight: 900;
+  font-size: 1.15rem;
+  letter-spacing: -0.02em;
+  color: var(--black);
+  text-decoration: none;
+}
+.nav-logo span { color: var(--green); }
+
+.nav-links { display: flex; gap: 2.5rem; list-style: none; align-items: center; }
+.nav-links a {
+  text-decoration: none; color: var(--mid-gray);
+  font-size: 0.82rem; font-weight: 400;
+  letter-spacing: 0.01em;
+  transition: color 0.2s;
+}
+.nav-links a:hover { color: var(--black); }
+
+.nav-hire {
+  background: var(--black) !important;
+  color: var(--white) !important;
+  padding: 0.6rem 1.6rem !important;
+  font-weight: 500 !important;
+  font-size: 0.82rem !important;
+  letter-spacing: 0.01em;
+  transition: background 0.2s !important;
+}
+.nav-hire:hover { background: var(--green) !important; color: var(--black) !important; }
+
+/* ── HERO ── */
+.hero {
+  min-height: 100vh;
+  background: var(--black);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  overflow: hidden;
+  position: relative;
+}
+
+/* Uber-style large background type */
+.hero-bg-text {
+  position: absolute;
+  bottom: -2rem;
+  left: -1rem;
+  font-family: 'Unbounded', sans-serif;
+  font-weight: 900;
+  font-size: clamp(8rem, 18vw, 18rem);
+  line-height: 0.85;
+  color: rgba(255,255,255,0.03);
+  letter-spacing: -0.04em;
+  pointer-events: none;
+  white-space: nowrap;
+  user-select: none;
+}
+
+.hero-left {
+  display: flex; flex-direction: column;
+  justify-content: center;
+  padding: 9rem 5% 5rem 5%;
+  position: relative; z-index: 2;
+}
+
+.hero-tag {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  font-size: 0.72rem; font-weight: 500;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--green);
+  margin-bottom: 2rem;
+  opacity: 0; animation: uberIn 0.6s 0.1s forwards;
+}
+.hero-tag-dot {
+  width: 7px; height: 7px; background: var(--green);
+  border-radius: 50%; animation: blink 1.5s infinite;
+}
+@keyframes blink {
+  0%,100% { opacity: 1; } 50% { opacity: 0.2; }
+}
+
+.hero-name {
+  font-family: 'Unbounded', sans-serif;
+  font-weight: 900;
+  font-size: clamp(3.2rem, 6vw, 6rem);
+  line-height: 1;
+  letter-spacing: -0.04em;
+  color: var(--white);
+  margin-bottom: 1.5rem;
+  opacity: 0; animation: uberIn 0.7s 0.25s forwards;
+}
+.hero-name .green { color: var(--green); }
+
+.hero-role {
+  font-size: clamp(0.95rem, 1.5vw, 1.15rem);
+  font-weight: 300;
+  color: rgba(255,255,255,0.5);
+  letter-spacing: 0.01em;
+  margin-bottom: 2.5rem;
+  opacity: 0; animation: uberIn 0.7s 0.4s forwards;
+  max-width: 460px;
+  line-height: 1.6;
+}
+.hero-role strong { color: rgba(255,255,255,0.85); font-weight: 500; }
+
+.hero-btns {
+  display: flex; gap: 0.75rem; flex-wrap: wrap;
+  opacity: 0; animation: uberIn 0.7s 0.55s forwards;
+}
+
+.btn-uber-white {
+  background: var(--white); color: var(--black);
+  padding: 1rem 2.2rem;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.85rem; font-weight: 500;
+  letter-spacing: 0.02em;
+  text-decoration: none; border: none;
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  transition: all 0.2s; cursor: none;
+}
+.btn-uber-white:hover { background: var(--green); color: var(--black); transform: translateY(-2px); }
+
+.btn-uber-ghost {
+  background: transparent; color: var(--white);
+  padding: 1rem 2.2rem;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.85rem; font-weight: 400;
+  letter-spacing: 0.02em;
+  text-decoration: none;
+  border: 1px solid rgba(255,255,255,0.2);
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  transition: all 0.2s; cursor: none;
+}
+.btn-uber-ghost:hover { border-color: rgba(255,255,255,0.6); transform: translateY(-2px); }
+
+.hero-right {
+  position: relative; overflow: hidden;
+  display: flex; align-items: stretch;
+}
+
+/* Stats panel — Uber style */
+.hero-stats-panel {
+  width: 100%;
+  display: grid;
+  grid-template-rows: repeat(3, 1fr);
+  border-left: 1px solid rgba(255,255,255,0.07);
+  opacity: 0; animation: uberInRight 0.8s 0.7s forwards;
+}
+.hero-stat {
+  padding: 0 3rem;
+  display: flex; flex-direction: column; justify-content: center;
+  border-bottom: 1px solid rgba(255,255,255,0.07);
+  transition: background 0.3s;
+}
+.hero-stat:hover { background: rgba(6,193,103,0.05); }
+.hero-stat:last-child { border-bottom: none; }
+
+.hero-stat-num {
+  font-family: 'Unbounded', sans-serif;
+  font-weight: 900;
+  font-size: clamp(3rem, 5vw, 5rem);
+  letter-spacing: -0.04em;
+  color: var(--white);
+  line-height: 1;
+  margin-bottom: 0.5rem;
+}
+.hero-stat-num .unit { color: var(--green); }
+
+.hero-stat-label {
+  font-size: 0.75rem;
+  font-weight: 400;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.35);
+}
+.hero-stat-sub {
+  font-size: 0.78rem;
+  color: var(--green);
+  font-weight: 500;
+  margin-top: 0.25rem;
+}
+
+/* bottom mini stats */
+.hero-mini-stats {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  display: grid; grid-template-columns: 1fr 1fr 1fr;
+  border-top: 1px solid rgba(255,255,255,0.07);
+  opacity: 0; animation: uberIn 0.7s 1s forwards;
+}
+.hero-mini {
+  padding: 1.5rem 5%;
+  border-right: 1px solid rgba(255,255,255,0.07);
+}
+.hero-mini:last-child { border-right: none; }
+.hero-mini-num {
+  font-family: 'Unbounded', sans-serif;
+  font-size: 1.4rem; font-weight: 700;
+  color: var(--green); letter-spacing: -0.02em;
+  margin-bottom: 0.2rem;
+}
+.hero-mini-label {
+  font-size: 0.68rem; letter-spacing: 0.1em;
+  text-transform: uppercase; color: rgba(255,255,255,0.3);
+}
+
+@keyframes uberIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes uberInRight {
+  from { opacity: 0; transform: translateX(20px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+/* ── MARQUEE ── */
+.marquee-strip {
+  background: var(--green);
+  overflow: hidden; padding: 0.9rem 0;
+  border-top: none; border-bottom: none;
+}
+.marquee-track {
+  display: flex; gap: 0;
+  animation: marquee 25s linear infinite;
+  white-space: nowrap;
+}
+.marquee-item {
+  display: inline-flex; align-items: center; gap: 1.5rem;
+  padding: 0 2.5rem;
+  font-family: 'Unbounded', sans-serif;
+  font-size: 0.68rem; font-weight: 700;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--black); flex-shrink: 0;
+}
+.marquee-item::after { content: '✦'; font-size: 0.5rem; opacity: 0.4; }
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+/* ── SECTIONS ── */
+section { position: relative; }
+
+.s-white { background: var(--white); }
+.s-black { background: var(--black); color: var(--white); }
+.s-off   { background: var(--off-white); }
+
+.container { max-width: 1200px; margin: 0 auto; padding: 0 5%; }
+.section-inner { padding: 7rem 0; }
+
+.section-eyebrow {
+  font-size: 0.7rem; font-weight: 500;
+  letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--green);
+  margin-bottom: 1.2rem;
+  display: flex; align-items: center; gap: 0.8rem;
+}
+.section-eyebrow::before {
+  content: '';
+  display: block; width: 1.5rem; height: 2px;
+  background: var(--green);
+}
+
+.section-h {
+  font-family: 'Unbounded', sans-serif;
+  font-weight: 900;
+  font-size: clamp(2.2rem, 4vw, 4rem);
+  line-height: 1.0;
+  letter-spacing: -0.04em;
+  margin-bottom: 1.5rem;
+}
+
+.section-h-light { color: var(--white); }
+.section-h-dark  { color: var(--black); }
+
+.section-body {
+  font-size: 1rem; line-height: 1.75;
+  color: var(--mid-gray); max-width: 540px;
+}
+.section-body-white { color: rgba(255,255,255,0.5); }
+
+/* ── ABOUT ── */
+.about-layout {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 5rem; align-items: center;
+  padding: 7rem 0;
+}
+.about-left .pull-quote {
+  font-family: 'Unbounded', sans-serif;
+  font-weight: 700;
+  font-size: clamp(1.3rem, 2.5vw, 2rem);
+  letter-spacing: -0.03em;
+  line-height: 1.25;
+  color: var(--black);
+  margin-bottom: 2rem;
+  padding-bottom: 2rem;
+  border-bottom: 2px solid var(--black);
+}
+.about-left .pull-quote .green { color: var(--green); }
+.about-left p {
+  font-size: 0.95rem; line-height: 1.85;
+  color: var(--mid-gray); margin-bottom: 1.2rem;
+}
+
+.about-value-grid {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 1px; background: var(--border);
+}
+.av-card {
+  background: var(--white);
+  padding: 2.2rem 1.8rem;
+  transition: background 0.2s;
+}
+.av-card:hover { background: var(--black); }
+.av-card:hover h4, .av-card:hover p { color: var(--white); }
+.av-card:hover .av-num { color: var(--green); }
+
+.av-num {
+  font-family: 'Unbounded', sans-serif;
+  font-weight: 900; font-size: 2.5rem;
+  letter-spacing: -0.04em;
+  color: var(--black); margin-bottom: 0.5rem;
+  transition: color 0.2s;
+}
+.av-card h4 {
+  font-family: 'Unbounded', sans-serif;
+  font-weight: 700; font-size: 0.75rem;
+  letter-spacing: 0.06em; text-transform: uppercase;
+  margin-bottom: 0.6rem; transition: color 0.2s;
+}
+.av-card p {
+  font-size: 0.82rem; color: var(--mid-gray);
+  line-height: 1.6; transition: color 0.2s;
+}
+
+/* ── EXPERIENCE ── */
+.exp-header {
+  display: grid; grid-template-columns: 1fr auto;
+  align-items: end;
+  margin-bottom: 3rem;
+}
+.exp-years-badge {
+  font-family: 'Unbounded', sans-serif;
+  font-weight: 900; font-size: 4rem;
+  color: var(--green); letter-spacing: -0.04em;
+  line-height: 1;
+}
+.exp-years-label {
+  font-size: 0.7rem; letter-spacing: 0.12em;
+  text-transform: uppercase; color: rgba(255,255,255,0.3);
+}
+
+.exp-card {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.07);
+  padding: 3.5rem;
+  transition: border-color 0.3s;
+}
+.exp-card:hover { border-color: var(--green); }
+
+.exp-card-top {
+  display: flex; justify-content: space-between;
+  align-items: flex-start; margin-bottom: 2rem;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid rgba(255,255,255,0.07);
+  flex-wrap: wrap; gap: 1rem;
+}
+
+.exp-company {
+  font-family: 'Unbounded', sans-serif;
+  font-weight: 900; font-size: 1.8rem;
+  letter-spacing: -0.03em; color: var(--white);
+}
+.exp-company-meta {
+  font-size: 0.82rem; color: rgba(255,255,255,0.35);
+  margin-top: 0.4rem; font-weight: 300;
+}
+.exp-company-meta strong { color: var(--green); font-weight: 500; }
+
+.exp-date-pill {
+  background: var(--green); color: var(--black);
+  font-family: 'Unbounded', sans-serif;
+  font-size: 0.65rem; font-weight: 700;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  padding: 0.5rem 1.2rem;
+  white-space: nowrap;
+}
+
+.exp-role {
+  font-size: 0.82rem; font-weight: 500;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  color: rgba(255,255,255,0.4); margin-bottom: 2rem;
+}
+
+.exp-grid {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 1.5rem; margin-bottom: 3rem;
+}
+.exp-item {
+  display: flex; gap: 1rem; align-items: flex-start;
+}
+.exp-item-line {
+  width: 2px; height: 100%;
+  min-height: 50px; background: var(--green);
+  flex-shrink: 0; margin-top: 0.2rem;
+  opacity: 0.3;
+}
+.exp-item:hover .exp-item-line { opacity: 1; }
+.exp-item p {
+  font-size: 0.87rem; line-height: 1.7;
+  color: rgba(255,255,255,0.5);
+}
+.exp-item:hover p { color: rgba(255,255,255,0.85); }
+
+.kpi-grid {
+  display: grid; grid-template-columns: repeat(6, 1fr);
+  gap: 1px; background: rgba(255,255,255,0.07);
+  border-top: 1px solid rgba(255,255,255,0.07);
+  padding-top: 2.5rem; margin-top: 1rem;
+}
+.kpi-box {
+  text-align: center; padding: 1.2rem 0.5rem;
+  transition: background 0.2s;
+}
+.kpi-box:hover { background: rgba(6,193,103,0.08); }
+.kpi-val {
+  font-family: 'Unbounded', sans-serif;
+  font-weight: 900; font-size: 1.3rem;
+  letter-spacing: -0.03em; color: var(--green);
+  margin-bottom: 0.3rem;
+}
+.kpi-lbl {
+  font-size: 0.62rem; letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.25);
+}
+
+/* ── SKILLS ── */
+.skills-layout {
+  display: grid; grid-template-columns: 340px 1fr;
+  gap: 5rem; padding: 7rem 0;
+  align-items: start;
+}
+.skills-intro-text p {
+  font-size: 0.92rem; color: var(--mid-gray);
+  line-height: 1.85; margin-bottom: 1.2rem;
+}
+
+.skill-blocks {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 1px; background: var(--border);
+}
+.skill-block {
+  background: var(--white);
+  padding: 2rem 1.8rem;
+  transition: background 0.25s;
+  cursor: default;
+}
+.skill-block:hover { background: var(--black); }
+.skill-block:hover .sb-title { color: var(--green); }
+.skill-block:hover .skill-pill { 
+  background: rgba(6,193,103,0.12);
+  border-color: rgba(6,193,103,0.3);
+  color: var(--white);
+}
+
+.sb-icon { font-size: 1.4rem; margin-bottom: 0.8rem; }
+.sb-title {
+  font-family: 'Unbounded', sans-serif;
+  font-weight: 700; font-size: 0.72rem;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--black); margin-bottom: 1.2rem;
+  transition: color 0.25s;
+}
+.skill-pills { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+.skill-pill {
+  font-size: 0.75rem; font-weight: 400;
+  color: var(--dark-gray);
+  background: var(--off-white);
+  border: 1px solid var(--border);
+  padding: 0.3rem 0.8rem;
+  transition: all 0.25s;
+}
+
+/* ── TESTIMONIALS ── */
+.testi-layout { padding: 7rem 0; }
+.testi-top {
+  display: flex; justify-content: space-between;
+  align-items: flex-end; margin-bottom: 3.5rem;
+  flex-wrap: wrap; gap: 1.5rem;
+}
+.li-badge {
+  display: inline-flex; align-items: center; gap: 0.6rem;
+  background: #0a66c2; color: white;
+  padding: 0.55rem 1.2rem;
+  font-size: 0.72rem; font-weight: 500;
+  letter-spacing: 0.06em;
+}
+
+.testi-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 1px; background: var(--border);
+}
+.testi-card {
+  background: var(--white);
+  padding: 2.8rem 2.4rem;
+  transition: background 0.25s;
+  position: relative;
+}
+.testi-card:hover { background: var(--black); }
+.testi-card:hover .tq { color: rgba(255,255,255,0.75); }
+.testi-card:hover .ta-name { color: var(--white); }
+.testi-card:hover .ta-role { color: rgba(255,255,255,0.35); }
+.testi-card:hover .testi-border { border-color: rgba(255,255,255,0.08); }
+.testi-card:hover .testi-num { color: rgba(6,193,103,0.15); }
+
+.testi-num {
+  position: absolute; top: 1.5rem; right: 2rem;
+  font-family: 'Unbounded', sans-serif;
+  font-size: 5rem; font-weight: 900;
+  color: rgba(0,0,0,0.04);
+  line-height: 1; pointer-events: none;
+  transition: color 0.25s;
+}
+
+.testi-stars { display: flex; gap: 3px; margin-bottom: 1.5rem; }
+.star { color: var(--green); font-size: 0.85rem; }
+
+.tq {
+  font-size: 0.93rem; line-height: 1.85;
+  color: var(--dark-gray); margin-bottom: 2rem;
+  transition: color 0.25s;
+}
+
+.testi-border {
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--border);
+  display: flex; align-items: center; gap: 1rem;
+  transition: border-color 0.25s;
+}
+.testi-av {
+  width: 42px; height: 42px;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Unbounded', sans-serif;
+  font-weight: 900; font-size: 0.85rem;
+  flex-shrink: 0;
+}
+.av-g { background: var(--green); color: var(--black); }
+.av-b { background: var(--black); color: var(--white); }
+.av-w { background: var(--off-white); color: var(--black); border: 1px solid var(--border); }
+.testi-card:hover .av-w { border-color: rgba(255,255,255,0.2); }
+
+.ta-name {
+  font-family: 'Unbounded', sans-serif;
+  font-weight: 700; font-size: 0.8rem;
+  letter-spacing: -0.01em; color: var(--black);
+  margin-bottom: 0.2rem; transition: color 0.25s;
+}
+.ta-role {
+  font-size: 0.72rem; color: var(--mid-gray);
+  transition: color 0.25s;
+}
+
+/* ── CERTIFICATIONS ── */
+.cert-layout { padding: 7rem 0; }
+.cert-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 1px; background: rgba(255,255,255,0.07);
+  margin-top: 3.5rem;
+}
+.cert-card {
+  padding: 2.5rem 2.2rem;
+  background: var(--black);
+  border-top: 2px solid transparent;
+  transition: border-color 0.25s, background 0.25s;
+}
+.cert-card:hover {
+  border-top-color: var(--green);
+  background: rgba(6,193,103,0.04);
+}
+.cert-provider {
+  font-size: 0.65rem; font-weight: 500;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--green); margin-bottom: 1rem;
+}
+.cert-name {
+  font-family: 'Unbounded', sans-serif;
+  font-weight: 700; font-size: 0.88rem;
+  letter-spacing: -0.01em; color: var(--white);
+  line-height: 1.45; margin-bottom: 1rem;
+}
+.cert-chip {
+  display: inline-block;
+  background: rgba(6,193,103,0.12);
+  color: var(--green);
+  font-size: 0.62rem; font-weight: 500;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  padding: 0.25rem 0.75rem;
+  border: 1px solid rgba(6,193,103,0.2);
+}
+
+/* ── CONTACT ── */
+.contact-layout {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 6rem; padding: 7rem 0;
+  align-items: start;
+}
+.contact-h {
+  font-family: 'Unbounded', sans-serif;
+  font-weight: 900;
+  font-size: clamp(2rem, 3.5vw, 3.5rem);
+  letter-spacing: -0.04em; line-height: 1.0;
+  margin-bottom: 1.5rem; color: var(--black);
+}
+.contact-h .green { color: var(--green); }
+.contact-body {
+  font-size: 0.95rem; color: var(--mid-gray);
+  line-height: 1.8; margin-bottom: 3rem;
+}
+
+.contact-list { display: flex; flex-direction: column; }
+.contact-row {
+  display: flex; align-items: center; gap: 1.5rem;
+  padding: 1.3rem 0;
+  border-bottom: 1px solid var(--border);
+  transition: padding-left 0.2s;
+}
+.contact-row:first-child { border-top: 1px solid var(--border); }
+.contact-row:hover { padding-left: 0.5rem; }
+
+.c-icon {
+  width: 44px; height: 44px;
+  background: var(--black); color: var(--white);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1rem; flex-shrink: 0;
+  transition: background 0.2s;
+}
+.contact-row:hover .c-icon { background: var(--green); color: var(--black); }
+
+.c-lbl {
+  font-size: 0.65rem; letter-spacing: 0.18em;
+  text-transform: uppercase; color: var(--mid-gray);
+  margin-bottom: 0.2rem;
+}
+.c-val { font-size: 0.92rem; color: var(--black); font-weight: 400; }
+.c-val a { color: var(--black); text-decoration: none; transition: color 0.2s; }
+.c-val a:hover { color: var(--green); }
+
+.contact-form {
+  background: var(--black); padding: 3rem;
+}
+.cf-title {
+  font-family: 'Unbounded', sans-serif;
+  font-weight: 700; font-size: 1rem;
+  letter-spacing: -0.02em; color: var(--white);
+  margin-bottom: 2rem;
+}
+.cf-group { margin-bottom: 1.3rem; }
+.cf-label {
+  display: block; font-size: 0.65rem;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  color: rgba(255,255,255,0.35); margin-bottom: 0.5rem;
+}
+.cf-input, .cf-textarea {
+  width: 100%;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.08);
+  color: var(--white);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.9rem; font-weight: 300;
+  padding: 0.9rem 1.1rem;
+  outline: none; transition: border-color 0.2s;
+}
+.cf-input:focus, .cf-textarea:focus {
+  border-color: var(--green);
+}
+.cf-textarea { height: 100px; resize: none; }
+.cf-input::placeholder, .cf-textarea::placeholder {
+  color: rgba(255,255,255,0.2);
+}
+.cf-btn {
+  width: 100%; background: var(--green);
+  color: var(--black); border: none;
+  font-family: 'Unbounded', sans-serif;
+  font-size: 0.75rem; font-weight: 700;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  padding: 1.1rem;
+  cursor: none; transition: all 0.2s;
+}
+.cf-btn:hover { background: white; transform: translateY(-2px); }
+
+/* ── FOOTER ── */
+footer {
+  background: var(--black);
+  border-top: 1px solid rgba(255,255,255,0.07);
+  padding: 2.5rem 5%;
+  display: flex; justify-content: space-between;
+  align-items: center; flex-wrap: wrap; gap: 1.5rem;
+}
+.footer-logo {
+  font-family: 'Unbounded', sans-serif;
+  font-weight: 900; font-size: 1.1rem;
+  letter-spacing: -0.02em; color: var(--white);
+  text-decoration: none;
+}
+.footer-logo span { color: var(--green); }
+.footer-nav { display: flex; gap: 2rem; }
+.footer-nav a {
+  font-size: 0.75rem; font-weight: 400;
+  letter-spacing: 0.06em; text-transform: uppercase;
+  color: rgba(255,255,255,0.3); text-decoration: none;
+  transition: color 0.2s;
+}
+.footer-nav a:hover { color: var(--green); }
+.footer-copy {
+  font-size: 0.72rem; color: rgba(255,255,255,0.2);
+}
+
+/* ── REVEAL ── */
+.reveal {
+  opacity: 0; transform: translateY(24px);
+  transition: opacity 0.65s ease, transform 0.65s ease;
+}
+.reveal.up { opacity: 1; transform: none; }
+.d1 { transition-delay: 0.1s; }
+.d2 { transition-delay: 0.2s; }
+.d3 { transition-delay: 0.3s; }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 1024px) {
+  nav { padding: 0 1.5rem; }
+  .hero { grid-template-columns: 1fr; }
+  .hero-right { display: none; }
+  .hero-mini-stats { display: none; }
+  .about-layout, .skills-layout, .contact-layout { grid-template-columns: 1fr; gap: 3rem; }
+  .testi-grid { grid-template-columns: 1fr; }
+  .exp-grid { grid-template-columns: 1fr; }
+  .kpi-grid { grid-template-columns: repeat(3, 1fr); }
+  .cert-grid { grid-template-columns: 1fr 1fr; }
+  .container { padding: 0 1.5rem; }
+}
+@media (max-width: 640px) {
+  .nav-links { display: none; }
+  .hero-name { font-size: 3rem; }
+  .cert-grid { grid-template-columns: 1fr; }
+  .skill-blocks { grid-template-columns: 1fr; }
+  .about-value-grid { grid-template-columns: 1fr; }
+  .contact-form { padding: 2rem 1.5rem; }
+  .kpi-grid { grid-template-columns: repeat(2, 1fr); }
+}
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- ── NAV ── -->
+<nav id="nav">
+  <a href="#" class="nav-logo">HARSHAL<span>.</span></a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#testimonials">Testimonials</a></li>
+    <li><a href="#contact" class="nav-hire">Hire Me</a></li>
+  </ul>
+</nav>
+
+<!-- ── HERO ── -->
+<section class="hero" id="home">
+  <div class="hero-bg-text">CX</div>
+
+  <div class="hero-left">
+    <div class="hero-tag">
+      <span class="hero-tag-dot"></span>
+      Open to Opportunities · Remote-Ready · Lisbon
+    </div>
+    <h1 class="hero-name">CUSTOMER<br>EXPERIENCE<br><span class="green">EXPERT.</span></h1>
+    <p class="hero-role">
+      <strong>Harshal Mala</strong> — 4+ years delivering world-class support contracted to
+      <strong>Meta via Teleperformance</strong>. Metrics-driven. Empathy-led. Remote-ready globally.
+    </p>
+    <div class="hero-btns">
+      <a href="#contact" class="btn-uber-white">Hire Me →</a>
+      <a href="#experience" class="btn-uber-ghost">See Track Record</a>
+    </div>
+  </div>
+
+  <div class="hero-right">
+    <div class="hero-stats-panel">
+      <div class="hero-stat">
+        <div class="hero-stat-num">95<span class="unit">%</span></div>
+        <div class="hero-stat-label">CSAT Score</div>
+        <div class="hero-stat-sub">↑ Top-tier satisfaction</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-num">98<span class="unit">%</span></div>
+        <div class="hero-stat-label">Helpfulness Rating</div>
+        <div class="hero-stat-sub">↑ Empathy-driven resolution</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-num">1.2<span class="unit">×</span></div>
+        <div class="hero-stat-label">Above Productivity Target</div>
+        <div class="hero-stat-sub">↑ Consistent overperformance</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-mini-stats">
+    <div class="hero-mini">
+      <div class="hero-mini-num">94%</div>
+      <div class="hero-mini-label">SLA Adherence</div>
+    </div>
+    <div class="hero-mini">
+      <div class="hero-mini-num">&lt;10%</div>
+      <div class="hero-mini-label">Escalation Rate</div>
+    </div>
+    <div class="hero-mini">
+      <div class="hero-mini-num">21 min</div>
+      <div class="hero-mini-label">Avg Handle Time</div>
+    </div>
+  </div>
+</section>
+
+<!-- ── MARQUEE ── -->
+<div class="marquee-strip">
+  <div class="marquee-track">
+    <span class="marquee-item">CSAT 95%</span>
+    <span class="marquee-item">First-Contact Resolution</span>
+    <span class="marquee-item">Meta Support Specialist</span>
+    <span class="marquee-item">Helpfulness 98%</span>
+    <span class="marquee-item">SLA Adherence 94%</span>
+    <span class="marquee-item">4+ Years BPO Excellence</span>
+    <span class="marquee-item">Remote-Ready Globally</span>
+    <span class="marquee-item">1.2× Productivity</span>
+    <span class="marquee-item">Escalation Rate &lt;10%</span>
+    <span class="marquee-item">CSAT 95%</span>
+    <span class="marquee-item">First-Contact Resolution</span>
+    <span class="marquee-item">Meta Support Specialist</span>
+    <span class="marquee-item">Helpfulness 98%</span>
+    <span class="marquee-item">SLA Adherence 94%</span>
+    <span class="marquee-item">4+ Years BPO Excellence</span>
+    <span class="marquee-item">Remote-Ready Globally</span>
+    <span class="marquee-item">1.2× Productivity</span>
+    <span class="marquee-item">Escalation Rate &lt;10%</span>
+  </div>
+</div>
+
+<!-- ── ABOUT ── -->
+<section class="s-white" id="about">
+  <div class="container">
+    <div class="about-layout">
+      <div class="about-left reveal">
+        <div class="section-eyebrow">About Me</div>
+        <p class="pull-quote">I don't close tickets.<br>I build <span class="green">trust</span> at scale.</p>
+        <p>Four years embedded in one of the world's most demanding support environments — contracted directly to Meta. I've handled everything from complex account crises to high-volume technical triage, always with the same standard: first contact, full resolution, zero friction.</p>
+        <p>My approach is simple. Empathy is not a soft skill — it's a performance driver. Every interaction I walk into, I'm thinking: how do I make this person feel heard, helped, and loyal? That mindset has produced consistent top-tier metrics across every KPI my teams track.</p>
+        <p>Now I'm looking for the next challenge — a team that demands excellence and wants someone who shows up ready to deliver it every single day.</p>
+      </div>
+      <div class="about-value-grid reveal d2">
+        <div class="av-card">
+          <div class="av-num">95%</div>
+          <h4>Customer Satisfaction</h4>
+          <p>Consistently top-quartile CSAT across thousands of interactions.</p>
+        </div>
+        <div class="av-card">
+          <div class="av-num">4+</div>
+          <h4>Years at Scale</h4>
+          <p>High-volume enterprise BPO supporting a global platform.</p>
+        </div>
+        <div class="av-card">
+          <div class="av-num">1.2×</div>
+          <h4>Above Target</h4>
+          <p>Productivity that outpaces benchmarks — without cutting corners.</p>
+        </div>
+        <div class="av-card">
+          <div class="av-num">0</div>
+          <h4>Supervision Needed</h4>
+          <p>Fully autonomous. Remote-first. Trusted to deliver across time zones.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── EXPERIENCE ── -->
+<section class="s-black" id="experience">
+  <div class="container">
+    <div class="section-inner">
+      <div class="exp-header reveal">
+        <div>
+          <div class="section-eyebrow">Career</div>
+          <h2 class="section-h section-h-light">Professional<br>Experience</h2>
+        </div>
+        <div>
+          <div class="exp-years-badge">4+</div>
+          <div class="exp-years-label">Years in CX</div>
+        </div>
+      </div>
+
+      <div class="exp-card reveal">
+        <div class="exp-card-top">
+          <div>
+            <div class="exp-company">TELEPERFORMANCE</div>
+            <div class="exp-company-meta">Lisbon, Portugal · Contracted to <strong>Meta</strong></div>
+          </div>
+          <div class="exp-date-pill">June 2021 — Present</div>
+        </div>
+        <div class="exp-role">Customer Service / Support Specialist</div>
+
+        <div class="exp-grid">
+          <div class="exp-item">
+            <div class="exp-item-line"></div>
+            <p>Resolved complex connectivity and account access issues across chat, email, and phone for a global user base — diagnosing root causes rapidly and delivering accurate resolutions.</p>
+          </div>
+          <div class="exp-item">
+            <div class="exp-item-line"></div>
+            <p>Guided users end-to-end through technical product lifecycles — from initial setup through advanced troubleshooting — adapting communication for all technical levels.</p>
+          </div>
+          <div class="exp-item">
+            <div class="exp-item-line"></div>
+            <p>Advocated for users by identifying and escalating recurring pain points to operations and policy teams, driving workflow improvements that reduced repeat query volumes.</p>
+          </div>
+          <div class="exp-item">
+            <div class="exp-item-line"></div>
+            <p>Optimised support workflows processing refunds, cancellations, and order queries with high accuracy — balancing speed, policy compliance, and a customer-first mindset.</p>
+          </div>
+          <div class="exp-item">
+            <div class="exp-item-line"></div>
+            <p>Built trust-based relationships that transformed high-stress situations into positive outcomes, reinforcing long-term loyalty and brand confidence.</p>
+          </div>
+          <div class="exp-item">
+            <div class="exp-item-line"></div>
+            <p>Operated autonomously in a remote, globally distributed team across rotating shifts including evenings and weekends — consistently delivering 1.20× above productivity targets.</p>
+          </div>
+        </div>
+
+        <div class="kpi-grid">
+          <div class="kpi-box">
+            <div class="kpi-val">95%</div>
+            <div class="kpi-lbl">CSAT</div>
+          </div>
+          <div class="kpi-box">
+            <div class="kpi-val">98%</div>
+            <div class="kpi-lbl">Helpfulness</div>
+          </div>
+          <div class="kpi-box">
+            <div class="kpi-val">94%</div>
+            <div class="kpi-lbl">SLA</div>
+          </div>
+          <div class="kpi-box">
+            <div class="kpi-val">1.2×</div>
+            <div class="kpi-lbl">Productivity</div>
+          </div>
+          <div class="kpi-box">
+            <div class="kpi-val">&lt;10%</div>
+            <div class="kpi-lbl">Escalation</div>
+          </div>
+          <div class="kpi-box">
+            <div class="kpi-val">21m</div>
+            <div class="kpi-lbl">Avg Handle</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── SKILLS ── -->
+<section class="s-off" id="skills">
+  <div class="container">
+    <div class="skills-layout">
+      <div class="skills-intro-text reveal">
+        <div class="section-eyebrow">Capabilities</div>
+        <h2 class="section-h section-h-dark">Core<br>Skills.</h2>
+        <p>Every competency below is battle-tested — built in a live, high-volume enterprise environment supporting one of the world's largest platforms.</p>
+        <p>I bring technical precision, human empathy, and operational excellence together in every interaction.</p>
+        <a href="#contact" class="btn-uber-white" style="margin-top:1.5rem; display:inline-flex;">Start a Conversation →</a>
+      </div>
+
+      <div class="skill-blocks reveal d2">
+        <div class="skill-block">
+          <div class="sb-icon">💬</div>
+          <div class="sb-title">Support Channels</div>
+          <div class="skill-pills">
+            <span class="skill-pill">Live Chat</span>
+            <span class="skill-pill">Email</span>
+            <span class="skill-pill">Phone / Voice</span>
+            <span class="skill-pill">Ticketing Systems</span>
+          </div>
+        </div>
+        <div class="skill-block">
+          <div class="sb-icon">🔧</div>
+          <div class="sb-title">Technical</div>
+          <div class="skill-pills">
+            <span class="skill-pill">Troubleshooting</span>
+            <span class="skill-pill">Root Cause Analysis</span>
+            <span class="skill-pill">Product Lifecycle</span>
+            <span class="skill-pill">CRM Navigation</span>
+          </div>
+        </div>
+        <div class="skill-block">
+          <div class="sb-icon">📊</div>
+          <div class="sb-title">Operations</div>
+          <div class="skill-pills">
+            <span class="skill-pill">Escalation Mgmt</span>
+            <span class="skill-pill">SLA Adherence</span>
+            <span class="skill-pill">Workflow Optimisation</span>
+            <span class="skill-pill">Refunds & Orders</span>
+          </div>
+        </div>
+        <div class="skill-block">
+          <div class="sb-icon">🤝</div>
+          <div class="sb-title">Communication</div>
+          <div class="skill-pills">
+            <span class="skill-pill">Empathetic Comms</span>
+            <span class="skill-pill">De-escalation</span>
+            <span class="skill-pill">User Advocacy</span>
+            <span class="skill-pill">Trust Building</span>
+          </div>
+        </div>
+        <div class="skill-block">
+          <div class="sb-icon">🌐</div>
+          <div class="sb-title">Work Style</div>
+          <div class="skill-pills">
+            <span class="skill-pill">Remote-First</span>
+            <span class="skill-pill">Async</span>
+            <span class="skill-pill">Rotating Shifts</span>
+            <span class="skill-pill">Autonomous</span>
+          </div>
+        </div>
+        <div class="skill-block">
+          <div class="sb-icon">🎓</div>
+          <div class="sb-title">Education</div>
+          <div class="skill-pills">
+            <span class="skill-pill">BBA Pune University</span>
+            <span class="skill-pill">5× LinkedIn Certs</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── TESTIMONIALS ── -->
+<section class="s-white" id="testimonials">
+  <div class="container">
+    <div class="testi-layout">
+      <div class="testi-top">
+        <div class="reveal">
+          <div class="section-eyebrow">Social Proof</div>
+          <h2 class="section-h section-h-dark">What People<br>Say.</h2>
+        </div>
+        <div class="reveal d2">
+          <div class="li-badge">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="white"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+            LinkedIn Recommendations
+          </div>
+        </div>
+      </div>
+
+      <div class="testi-grid">
+        <div class="testi-card reveal">
+          <div class="testi-num">"</div>
+          <div class="testi-stars">★★★★★</div>
+          <p class="tq">"Harshal is one of the most reliable and customer-obsessed specialists I've had the pleasure of working alongside. His ability to stay calm under pressure and resolve the most complex account issues without escalation is genuinely rare. He consistently set the bar for our entire team."</p>
+          <div class="testi-border">
+            <div class="testi-av av-g">SR</div>
+            <div>
+              <div class="ta-name">Siddharth R.</div>
+              <div class="ta-role">Team Lead · Teleperformance</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="testi-card reveal d1">
+          <div class="testi-num">"</div>
+          <div class="testi-stars">★★★★★</div>
+          <p class="tq">"What sets Harshal apart is his genuine care for the experience — he never just closes a ticket. He makes sure the person on the other end actually feels heard and helped. His CSAT scores reflect that every single month. A true professional."</p>
+          <div class="testi-border">
+            <div class="testi-av av-b">PK</div>
+            <div>
+              <div class="ta-name">Priya K.</div>
+              <div class="ta-role">Senior QA Analyst · Meta Operations</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="testi-card reveal d2">
+          <div class="testi-num">"</div>
+          <div class="testi-stars">★★★★★</div>
+          <p class="tq">"I've managed hundreds of support specialists over my career. Harshal is in the top 5%. His numbers speak for themselves, but what truly stands out is how he identifies process gaps and brings real solutions. He makes every team around him better."</p>
+          <div class="testi-border">
+            <div class="testi-av av-w">AM</div>
+            <div>
+              <div class="ta-name">Anjali M.</div>
+              <div class="ta-role">Operations Manager · Teleperformance</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── CERTIFICATIONS ── -->
+<section class="s-black" id="certifications">
+  <div class="container">
+    <div class="cert-layout">
+      <div class="reveal">
+        <div class="section-eyebrow">Credentials</div>
+        <h2 class="section-h section-h-light">Certifications<br>& Education.</h2>
+      </div>
+      <div class="cert-grid reveal d1">
+        <div class="cert-card">
+          <div class="cert-provider">LinkedIn Learning</div>
+          <div class="cert-name">Customer Service Foundations</div>
+          <div class="cert-chip">Verified</div>
+        </div>
+        <div class="cert-card">
+          <div class="cert-provider">LinkedIn Learning</div>
+          <div class="cert-name">Problem-Solving & Troubleshooting</div>
+          <div class="cert-chip">Verified</div>
+        </div>
+        <div class="cert-card">
+          <div class="cert-provider">LinkedIn Learning</div>
+          <div class="cert-name">Handling Abusive Customers</div>
+          <div class="cert-chip">Verified</div>
+        </div>
+        <div class="cert-card">
+          <div class="cert-provider">LinkedIn Learning</div>
+          <div class="cert-name">Creating Positive Conversations with Challenging Customers</div>
+          <div class="cert-chip">Verified</div>
+        </div>
+        <div class="cert-card">
+          <div class="cert-provider">Professional Certification</div>
+          <div class="cert-name">Escalation Management</div>
+          <div class="cert-chip">Verified</div>
+        </div>
+        <div class="cert-card">
+          <div class="cert-provider">Pune University</div>
+          <div class="cert-name">Bachelor of Business Administration</div>
+          <div class="cert-chip">Degree</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── CONTACT ── -->
+<section class="s-white" id="contact">
+  <div class="container">
+    <div class="contact-layout">
+      <div class="reveal">
+        <div class="section-eyebrow">Get in Touch</div>
+        <h2 class="contact-h">Let's Build<br>Something<br><span class="green">Great.</span></h2>
+        <p class="contact-body">Ready to bring elite customer experience to your team. Full schedule flexibility. Available globally. Immediate start possible.</p>
+
+        <div class="contact-list">
+          <div class="contact-row">
+            <div class="c-icon">✉</div>
+            <div>
+              <div class="c-lbl">Email</div>
+              <div class="c-val"><a href="mailto:harshalmala@gmail.com">harshalmala@gmail.com</a></div>
+            </div>
+          </div>
+          <div class="contact-row">
+            <div class="c-icon">📞</div>
+            <div>
+              <div class="c-lbl">Phone</div>
+              <div class="c-val"><a href="tel:+351920025289">+351 920 025 289</a></div>
+            </div>
+          </div>
+          <div class="contact-row">
+            <div class="c-icon">📍</div>
+            <div>
+              <div class="c-lbl">Location</div>
+              <div class="c-val">Lisbon, Portugal</div>
+            </div>
+          </div>
+          <div class="contact-row">
+            <div class="c-icon">💼</div>
+            <div>
+              <div class="c-lbl">LinkedIn</div>
+              <div class="c-val"><a href="https://linkedin.com/in/harshalmala" target="_blank">linkedin.com/in/harshalmala</a></div>
+            </div>
+          </div>
+          <div class="contact-row">
+            <div class="c-icon">⚡</div>
+            <div>
+              <div class="c-lbl">Availability</div>
+              <div class="c-val">Remote · Full Flexibility · Immediate</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="contact-form reveal d2">
+        <div class="cf-title">Send a Message</div>
+        <div class="cf-group">
+          <label class="cf-label">Your Name</label>
+          <input class="cf-input" type="text" placeholder="John Smith">
+        </div>
+        <div class="cf-group">
+          <label class="cf-label">Email Address</label>
+          <input class="cf-input" type="email" placeholder="john@company.com">
+        </div>
+        <div class="cf-group">
+          <label class="cf-label">Company & Role</label>
+          <input class="cf-input" type="text" placeholder="Acme Corp · Head of CX">
+        </div>
+        <div class="cf-group">
+          <label class="cf-label">Message</label>
+          <textarea class="cf-textarea" placeholder="Tell me about the opportunity…"></textarea>
+        </div>
+        <button class="cf-btn" onclick="this.textContent='MESSAGE SENT ✓'; this.style.background='#06c167'; setTimeout(()=>{this.textContent='SEND MESSAGE →'; this.style.background='';}, 3000);">
+          SEND MESSAGE →
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <a href="#" class="footer-logo">HARSHAL<span>.</span></a>
+  <nav class="footer-nav">
+    <a href="#about">About</a>
+    <a href="#experience">Experience</a>
+    <a href="#skills">Skills</a>
+    <a href="#testimonials">Testimonials</a>
+    <a href="#contact">Contact</a>
+  </nav>
+  <div class="footer-copy">© 2025 Harshal Mala</div>
+</footer>
+
+<script>
+// Cursor
+const cur = document.getElementById('cursor');
+const ring = document.getElementById('cursorRing');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove', e => { mx=e.clientX; my=e.clientY; });
+(function anim(){
+  cur.style.left=mx+'px'; cur.style.top=my+'px';
+  rx+=(mx-rx)*0.13; ry+=(my-ry)*0.13;
+  ring.style.left=rx+'px'; ring.style.top=ry+'px';
+  requestAnimationFrame(anim);
+})();
+
+// Nav
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', () => nav.classList.toggle('scrolled', scrollY > 60));
+
+// Reveal
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('up'); obs.unobserve(e.target); }});
+}, { threshold: 0.1 });
+document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+</script>
+</body>
+</html>
